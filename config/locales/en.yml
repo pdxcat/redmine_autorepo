@@ -1,0 +1,9 @@
+en:
+  redmine_autorepo_text_settings_subversion: "Subversion Repository Automation"
+  redmine_autorepo_text_repo_path_subversion: "Subversion Repository Base Path"
+  redmine_autorepo_text_autocreate_repo_subversion: "Automatically Create Subversion Repositories"
+  redmine_autorepo_text_autodelete_repo_subversion: "Automatically Delete Subversion Repositories"
+  redmine_autorepo_text_settings_git: "Git Repository Automation"
+  redmine_autorepo_text_repo_path_git: "Git Repository Base Path"
+  redmine_autorepo_text_autocreate_repo_git: "Automatically Create Git Repositories"
+  redmine_autorepo_text_autodelete_repo_git: "Automatically Delete Git Repositories"

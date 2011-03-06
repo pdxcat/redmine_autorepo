@@ -1,0 +1,25 @@
+<fieldset>
+  <legend><%= l(:redmine_autorepo_text_settings_subversion) %></legend>
+  <p><label><%= l(:redmine_autorepo_text_repo_path_subversion) %></label>
+    <%= text_field_tag 'settings[repo_path_subversion]', @settings['repo_path_subversion'] %><br />
+  </p>
+  <p><label><%= l(:redmine_autorepo_text_autocreate_repo_subversion) %></label>
+    <input id="settings_autocreate_repo_subversion" name="settings[autocreate_repo_subversion]" type="checkbox" value="true" <%= "checked" unless @settings['autocreate_repo_subversion'].nil? %> /><br />
+  </p>
+  <p><label><%= l(:redmine_autorepo_text_autodelete_repo_subversion) %></label>
+    <input id="settings_autodelete_repo_subversion" name="settings[autodelete_repo_subversion]" type="checkbox" value="true" <%= "checked" unless @settings['autodelete_repo_subversion'].nil? %> /><br />
+  </p>
+</fieldset>
+
+<fieldset>
+  <legend><%= l(:redmine_autorepo_text_settings_git) %></legend>
+  <p><label><%= l(:redmine_autorepo_text_repo_path_git) %></label>
+    <%= text_field_tag 'settings[repo_path_git]', @settings['repo_path_git'] %><br />
+  </p>
+  <p><label><%= l(:redmine_autorepo_text_autocreate_repo_git) %></label>
+    <input id="settings_autocreate_repo_git" name="settings[autocreate_repo_git]" type="checkbox" value="true" <%= "checked" unless @settings['autocreate_repo_git'].nil? %> /><br />
+  </p>
+  <p><label><%= l(:redmine_autorepo_text_autodelete_repo_git) %></label>
+    <input id="settings_autodelete_repo_git" name="settings[autodelete_repo_git]" type="checkbox" value="true" <%= "checked" unless @settings['autodelete_repo_git'].nil? %> /><br />
+  </p>
+</fieldset>
