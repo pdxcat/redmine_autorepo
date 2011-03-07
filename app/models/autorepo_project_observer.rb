@@ -17,6 +17,8 @@
 #  along with redmine_autorepo.  If not, see 
 #  <http://www.gnu.org/licenses/>.
 
+require_dependency 'autorepo'
+
 class AutorepoProjectObserver < ActiveRecord::Observer
   observe :project
 

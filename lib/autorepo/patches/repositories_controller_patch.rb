@@ -18,6 +18,7 @@
 #  <http://www.gnu.org/licenses/>.
 
 require_dependency 'repositories_controller'
+require_dependency 'autorepo'
 
 module Autorepo
   module Patches
@@ -33,9 +34,9 @@ module Autorepo
       end
       
       def edit_with_scm_settings
-        if Autorepo::supported_scm.include?(params[:repository])
-          params[:repository] ||= Hash.new  
-          params[:repository][:url] = Autorepo::repo_path(@project, params[:repository])
+        if Autorepo::supported_scm.include?(params[:repository_scm].underscore.to_sym)
+          params[:repository] ||= Hash.new
+          params[:repository][:url] = Autorepo::url(@project, params[:repository_scm])
         end
         edit_without_scm_settings
       end

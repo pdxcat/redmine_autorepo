@@ -32,13 +32,12 @@ module Autorepo
     return repo_base
   end
 
-
   def self.create(project, scm)
     begin
       File.umask(0007)
       scm_module = Autorepo::SCM.const_get(scm.to_s.camelize)
       scm_module.create(repo_path(project, scm))
-    rescue
+    rescue => error
       project.logger.error "Autorepo: Unable to create repository"
       project.logger.error "Autorepo: #{error.message}"
     end
@@ -47,21 +46,30 @@ module Autorepo
   def self.destroy(project, scm)
     begin
       FileUtils.rm_rf(repo_path(project, scm))
-    rescue
+    rescue => error
       project.logger.error "Autorepo: Unable to destroy repository"
       project.logger.error "Autorepo: #{error.message}"
     end
   end
 
   def self.repo_path(project, scm)
+    scm_sym = case scm
+      when Symbol then scm
+      when String then scm.underscore.to_sym
+    end
     begin
-      scm_module = Autorepo::SCM.const_get(scm.to_s.camelize)
-      repo_path = File.join(repo_base[scm], scm_module.basename(project.identifier))
+      scm_module = Autorepo::SCM.const_get(scm_sym.to_s.camelize)
+      repo_path = File.join(repo_base[scm_sym], scm_module.basename(project.identifier))
       repo_path = repo_path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
-    rescue
+    rescue => error
       project.logger.error "Autorepo: Unable to get repo_path"
       project.logger.error "Autorepo: #{error.message}"
     end
+  end
+
+  def self.url(project, scm)
+    scm_module = Autorepo::SCM.const_get(scm.to_s.camelize)
+    scm_module.url(repo_path(project, scm))
   end
 
 end

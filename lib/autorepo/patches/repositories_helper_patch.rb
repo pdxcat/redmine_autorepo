@@ -15,6 +15,7 @@
 #  <http://www.gnu.org/licenses/>.
 
 require_dependency 'repositories_helper'
+require_dependency 'autorepo'
 
 module Autorepo
   module Patches
