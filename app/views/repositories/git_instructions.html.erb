@@ -1,0 +1,6 @@
+<%= call_hook(:view_repositories_show_contextual, { :repository => @repository, :project => @project }) %>
+<h2><%= l(:label_repository)%></h2>
+
+<%# This can be used to display basic git setup instructions, like on github... %>
+Empty Repository
+<% html_title(l(:label_repository)) -%>
