@@ -17,5 +17,51 @@
 #  along with redmine_autorepo.  If not, see 
 #  <http://www.gnu.org/licenses/>.
 
+require 'fileutils'
+
 module Autorepo
+  
+  def self.supported_scm
+    [:subversion, :git]
+  end
+
+  def self.repo_base
+    repo_base = Hash.new
+    repo_base[:git]        = Setting[:plugin_redmine_autorepo][:repo_path_git]
+    repo_base[:subversion] = Setting[:plugin_redmine_autorepo][:repo_path_subversion]
+    return repo_base
+  end
+
+
+  def self.create(project, scm)
+    begin
+      File.umask(0007)
+      scm_module = Autorepo::SCM.const_get(scm.to_s.camelize)
+      scm_module.create(repo_path(project, scm))
+    rescue
+      project.logger.error "Autorepo: Unable to create repository"
+      project.logger.error "Autorepo: #{error.message}"
+    end
+  end
+
+  def self.destroy(project, scm)
+    begin
+      FileUtils.rm_rf(repo_path(project, scm))
+    rescue
+      project.logger.error "Autorepo: Unable to destroy repository"
+      project.logger.error "Autorepo: #{error.message}"
+    end
+  end
+
+  def self.repo_path(project, scm)
+    begin
+      scm_module = Autorepo::SCM.const_get(scm.to_s.camelize)
+      repo_path = File.join(repo_base[scm], scm_module.basename(project.identifier))
+      repo_path = repo_path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+    rescue
+      project.logger.error "Autorepo: Unable to get repo_path"
+      project.logger.error "Autorepo: #{error.message}"
+    end
+  end
+
 end

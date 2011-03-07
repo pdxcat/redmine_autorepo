@@ -28,6 +28,7 @@ module Autorepo
       def self.create(path)
         Autorepo::SCM::system_or_raise "svnadmin create #{path}"
       end
+
       def self.basename(identifier)
         return identifier.to_s
       end
@@ -41,6 +42,7 @@ module Autorepo
           Autorepo::SCM::system_or_raise "git update-server-info"
         end
       end
+
       def self.basename(identifier)
         return "#{identifier.to_s}.git"
       end

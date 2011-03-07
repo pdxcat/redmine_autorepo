@@ -33,10 +33,9 @@ module Autorepo
       end
       
       def edit_with_scm_settings
-        params[:repository] ||= Hash.new  
-        params[:repository][:url] = case params[:repository_scm]
-          when 'Git' then File.join(Autorepo::Setting[:plugin_redmine_autorepo][:repo_path_git],"#{@project.identifier}",'.git')
-          when 'Subversion' then File.join(Autorepo::Setting[:plugin_redmine_autorepo][:repo_path_git],"#{@project.identifier}")
+        if Autorepo::supported_scm.include?(params[:repository])
+          params[:repository] ||= Hash.new  
+          params[:repository][:url] = Autorepo::repo_path(@project, params[:repository])
         end
         edit_without_scm_settings
       end
