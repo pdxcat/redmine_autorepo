@@ -1,9 +1,13 @@
 module Autorepo
   module SCM
 
+    def self.system_or_raise(command)
+      raise "\"#{command}\" failed" unless system command
+    end
+
     module Subversion
       def self.create(path)
-        system_or_raise "svnadmin create #{path}"
+        Autorepo::SCM::system_or_raise "svnadmin create #{path}"
       end
       def self.basename(identifier)
         return identifier.to_s
@@ -14,9 +18,8 @@ module Autorepo
       def self.create(path)
         Dir.mkdir path
         Dir.chdir(path) do
-          system_or_raise "git --bare init --shared"
-          system_or_raise "git update-server-info"
-          system_or_raise "ln -s #{path} #{path}.git"
+          Autorepo::SCM::system_or_raise "git --bare init --shared"
+          Autorepo::SCM::system_or_raise "git update-server-info"
         end
       end
       def self.basename(identifier)

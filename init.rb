@@ -1,7 +1,11 @@
 require 'redmine'
 
+config.to_prepare do
+  ActiveRecord::Base.observers << :autorepo_project_observer
+end
+
 Redmine::Plugin.register :redmine_autorepo do
-  name 'Redmine Maseeh College of Engineering and Computer Science Plugin'
+  name 'Redmine Autorepo Plugin'
   author 'Reid Vandewiele'
   description 'Enables automatic repository creation at project creation time.'
   version '0.0.1'
@@ -14,6 +18,3 @@ Redmine::Plugin.register :redmine_autorepo do
     'autodelete_repo_git'        => 'false',
   }, :partial => 'settings/redmine_autorepo_settings'
 end
-
-# initialize observer
-ActiveRecord::Base.observers = ActiveRecord::Base.observers << AutorepoProjectObserver
