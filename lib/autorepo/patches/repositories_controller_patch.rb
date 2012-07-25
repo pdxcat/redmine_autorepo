@@ -32,21 +32,12 @@ module Autorepo
           show_without_instructions
         end
       end
-      
-      def edit_with_scm_settings
-        if Autorepo::supported_scm.include?(params[:repository_scm].underscore.to_sym)
-          params[:repository] ||= Hash.new
-          params[:repository][:url] = Autorepo::url(@project, params[:repository_scm])
-        end
-        edit_without_scm_settings
-      end
 
       def self.included(base)
         base.class_eval do
           unloadable
         end
         base.send(:alias_method_chain, :show, :instructions)
-        base.send(:alias_method_chain, :edit, :scm_settings)
       end
 
     end
