@@ -19,7 +19,6 @@
 
 require 'redmine'
 require 'autorepo/patches/repositories_controller_patch'
-require 'autorepo/patches/repositories_helper_patch'
 
 Rails.configuration.to_prepare do
   ActiveRecord::Base.observers << :autorepo_project_observer
