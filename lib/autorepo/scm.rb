@@ -53,7 +53,7 @@ module Autorepo
         FileUtils.rm_rf(path)
       end
       def self.basename(identifier)
-        return "#{identifier.to_s}.git"
+        return "#{identifier.to_s}"
       end
       def self.url(path)
         path
