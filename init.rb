@@ -21,7 +21,7 @@ require 'redmine'
 require 'autorepo/patches/repositories_controller_patch'
 require 'autorepo/patches/repositories_helper_patch'
 
-config.to_prepare do
+Rails.configuration.to_prepare do
   ActiveRecord::Base.observers << :autorepo_project_observer
 end
 
@@ -29,7 +29,7 @@ Redmine::Plugin.register :redmine_autorepo do
   name 'Redmine Autorepo Plugin'
   author 'Reid Vandewiele'
   description 'Enables automatic repository creation at project creation time.'
-  version '0.0.1'
+  version '0.0.2'
   settings :default => {
     'repo_path_subversion'       => '/www/svn',
     'autocreate_repo_subversion' => 'false',

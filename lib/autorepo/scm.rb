@@ -28,6 +28,9 @@ module Autorepo
       def self.create(path)
         Autorepo::SCM::system_or_raise "svnadmin create #{path}"
       end
+      def self.destroy(path)
+        FileUtils.rm_rf(path)
+      end
       def self.basename(identifier)
         return identifier.to_s
       end
@@ -45,6 +48,9 @@ module Autorepo
           Autorepo::SCM::system_or_raise "git --bare init --shared"
           Autorepo::SCM::system_or_raise "git update-server-info"
         end
+      end
+      def self.destroy(path)
+        FileUtils.rm_rf(path)
       end
       def self.basename(identifier)
         return "#{identifier.to_s}.git"

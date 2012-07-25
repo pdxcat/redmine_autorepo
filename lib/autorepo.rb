@@ -20,7 +20,7 @@
 require 'fileutils'
 
 module Autorepo
-  
+
   def self.supported_scm
     [:subversion, :git]
   end
@@ -45,7 +45,8 @@ module Autorepo
 
   def self.destroy(project, scm)
     begin
-      FileUtils.rm_rf(repo_path(project, scm))
+      scm_module = Autorepo::SCM.const_get(scm.to_s.camelize)
+      scm_module.destroy(repo_path(project, scm))
     rescue => error
       project.logger.error "Autorepo: Unable to destroy repository"
       project.logger.error "Autorepo: #{error.message}"
