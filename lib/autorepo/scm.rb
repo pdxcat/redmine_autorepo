@@ -47,10 +47,12 @@ module Autorepo
         Dir.chdir(path) do
           Autorepo::SCM::system_or_raise "git --bare init --shared"
           Autorepo::SCM::system_or_raise "git update-server-info"
+          Autorepo::SCM::system_or_raise "ln -s #{path} #{path}.git"
         end
       end
       def self.destroy(path)
         FileUtils.rm_rf(path)
+        FileUtils.rm_rf("#{path}.git")
       end
       def self.basename(identifier)
         return "#{identifier.to_s}"
